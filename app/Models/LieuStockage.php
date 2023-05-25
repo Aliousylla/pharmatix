@@ -9,8 +9,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class LieuStockage extends Model
 {
     use HasFactory;
-    protected $table = 'lieux_stockage';
-    protected $fillable = ['nom', 'adresse', 'description'];
+    protected $table = 'lieu_stockages';
+    protected $fillable = ['nom', 'adresse'];
 
     public function emplacements()
     {

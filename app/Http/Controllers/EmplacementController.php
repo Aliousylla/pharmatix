@@ -24,9 +24,15 @@ class EmplacementController extends Controller
     {
         // Valider les données du formulaire
         $validatedData = $request->validate([
-            'nom' => 'required',
-            'description' => 'required',
+            'zone' => 'required',
+            'etage' => 'required',
+            'tiroir' => 'required',
             'lieu_stockage_id' => 'required',
+
+            // $table->string('zone');
+            // $table->string('etage');
+            // $table->string('tiroir ');
+            // $table->foreignId('lieu_stockage_id')->constrained();
         ]);
 
         // Créer un nouvel emplacement

@@ -14,10 +14,11 @@ return new class extends Migration
         Schema::create('emplacements', function (Blueprint $table) {
             $table->id();
             // $table->unsignedBigInteger('lieu_stockage_id');
-            $table->string('code');
-            $table->string('description');
+            $table->string('zone');
+            $table->string('etage');
+            $table->string('tiroir');
             $table->foreignId('lieu_stockage_id')->constrained();
-            $table->foreignId('medicament_id')->constrained();
+          
             $table->timestamps();
         });
     }

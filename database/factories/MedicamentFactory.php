@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Medicament;
 use App\Models\Categorie;
+use App\Models\Emplacement;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Faker\Factory as FakerFactory;
 
@@ -24,6 +25,7 @@ class MedicamentFactory extends Factory
             'quantite_en_stock' => $faker->numberBetween(0, 100),
             'date_expiration' => $faker->date,
             'categorie_id' => Categorie::factory(),
+            'emplacement_id' => Emplacement::factory(),
         ];
     }
 

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Categorie;
+use App\Models\Emplacement;
+use App\Models\LieuStockage;
 use App\Models\Medicament;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -13,13 +15,18 @@ class MedicamentController extends Controller
     {
         $medicaments = Medicament::all();
         $categories = Categorie::all();
-        return view('medicaments.index', compact('medicaments','categories'));
+        $emplacements = Emplacement::all();
+        $lieuStockages = LieuStockage::all();
+        return view('medicaments.index', compact('medicaments','categories','emplacements','lieuStockages'));
     }
 
     public function create()
     {
         $categories = Categorie::all();
-        return view('medicaments.create', compact('categories'));
+        $emplacements = Emplacement::all();
+        $lieuStockages = LieuStockage::all();
+        return view('medicaments.create', compact('categories','emplacements','lieuStockages'));
+
 
     }
 
@@ -35,6 +42,7 @@ class MedicamentController extends Controller
             'quantite_en_stock' => 'required',
             'date_expiration' => 'required',
             'categorie_id' => 'required',
+            'emplacement_id' => 'required',
         ]);
 
         // Créer un nouveau médicament
@@ -48,14 +56,18 @@ class MedicamentController extends Controller
     {
         $medicament = Medicament::findOrFail($id);
         $categories = Categorie::all();
-        return view('medicaments.show', compact('medicament','categories'));
+        $emplacements = Emplacement::all();
+        $lieuStockages = LieuStockage::all();
+        return view('medicaments.show', compact('medicament','categories','emplacements','lieuStockages'));
     }
 
     public function edit($id)
     {
         $medicament = Medicament::findOrFail($id);
         $categories = Categorie::all();
-        return view('medicaments.edit', compact('medicament','categories'));
+        $emplacements = Emplacement::all();
+        $lieuStockages = LieuStockage::all();
+        return view('medicaments.edit', compact('medicament','categories','emplacements','lieuStockages'));
     }
 
     public function update(Request $request, $id)
@@ -70,6 +82,7 @@ class MedicamentController extends Controller
             'quantite_en_stock' => 'required',
             'date_expiration' => 'required',
             'categorie_id' => 'required',
+            'emplacement_id' => 'required',
         ]);
 
         // Rechercher le médicament à mettre à jour

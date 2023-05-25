@@ -173,6 +173,21 @@ Liste des médicaments
                 <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
               </div>
+              <div class="form-group mb-3">
+                <label for="emplacement_id">Emplacement</label>
+                <select name="emplacement_id" id="emplacement_id" class="form-control @error('emplacement_id') is-invalid @enderror" required>
+                  <option value="">Sélectionnez une Emplacement</option>
+                  @foreach($emplacements as $emplacement)
+                  <option value="{{ $emplacement->id }}">zone : {{ $emplacement->zone }} Étagère : {{ $emplacement->etage }} Tiroir : {{ $emplacement->tiroir }}</option>
+                  @endforeach
+                </select>
+                <div class="invalid-feedback">
+                  Veuillez sélectionner une Emplacement.
+                </div>
+                @error('emplacement_id')
+                <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
+              </div>
         
 
               <!-- Ajoutez ici les autres champs du formulaire -->
