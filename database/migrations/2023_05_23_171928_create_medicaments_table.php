@@ -20,8 +20,11 @@ return new class extends Migration
             $table->decimal('prix_unitaire', 8, 2);
             $table->integer('quantite_en_stock');
             $table->date('date_expiration');
-            $table->foreignId('categorie_id')->constrained()->onDelete('cascade');
+            $table->foreignId('categorie_id')->constrained();
             $table->foreignId('emplacement_id')->constrained();
+            $table->foreignId('lieu_stockage_id')->constrained();
+            $table->foreignId('fournisseur_id')->constrained();
+
             
             $table->timestamps();
            

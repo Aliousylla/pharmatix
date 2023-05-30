@@ -16,4 +16,8 @@ class Fournisseur extends Model
     {
         return $this->hasMany(Commande::class, 'fournisseur_id');
     }
+    public function medicament()
+    {
+        return $this->hasMany(Categorie::class, 'fournisseur_id');
+    }
 }

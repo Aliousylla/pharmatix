@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nom');
             $table->string('adresse');
+            $table->foreignId('categorie_id')->constrained();
             $table->timestamps();
         });
     }

@@ -39,8 +39,14 @@ Liste des médicaments
         <td>{{ $medicament->categorie->nom }}</td>
         <td>
           {{-- <a href="{{ route('medicaments.edit', $medicament->id) }}" class="btn btn-primary">Modifier</a> --}}
+
+          @auth
+          @if (Auth::user()->is_admin='admin')
           <a href="{{ route('medicaments.show', $medicament->id) }}" class="btn btn-primary">Afficher</a>
 
+          @endif
+
+          @endauth
           {{-- <form action="{{ route('medicaments.destroy', $medicament->id) }}" method="POST" style="display: inline-block;">
             @csrf
             @method('DELETE')
@@ -157,7 +163,8 @@ Liste des médicaments
                 <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
               </div>
-        
+              
+
               <div class="form-group mb-3">
                 <label for="categorie_id">Catégorie</label>
                 <select name="categorie_id" id="categorie_id" class="form-control @error('categorie_id') is-invalid @enderror" required>
@@ -173,12 +180,29 @@ Liste des médicaments
                 <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
               </div>
+
+              <div class="form-group mb-3">
+                <label for="lieu_stockage_id">lieu de stockages</label>
+                <select name="lieu_stockage_id" id="lieu_stockage_id" class="form-control @error('lieu_stockage_id') is-invalid @enderror" required>
+                  <option value="">Sélectionnez une catégorie</option>
+                  @foreach($lieuStockages as $lieuStockage)
+                  <option value="{{ $lieuStockage->id }}">{{ $lieuStockage->nom }}</option>
+                  @endforeach
+                </select>
+                <div class="invalid-feedback">
+                  Veuillez sélectionner le lieu de stockage
+                </div>
+                @error('lieu_stockage_id')
+                <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
+              </div>
+
               <div class="form-group mb-3">
                 <label for="emplacement_id">Emplacement</label>
                 <select name="emplacement_id" id="emplacement_id" class="form-control @error('emplacement_id') is-invalid @enderror" required>
                   <option value="">Sélectionnez une Emplacement</option>
                   @foreach($emplacements as $emplacement)
-                  <option value="{{ $emplacement->id }}">zone : {{ $emplacement->zone }} Étagère : {{ $emplacement->etage }} Tiroir : {{ $emplacement->tiroir }}</option>
+                  <option value="{{ $emplacement->id }}">{{ $emplacement->nom }} </option>
                   @endforeach
                 </select>
                 <div class="invalid-feedback">
@@ -189,8 +213,22 @@ Liste des médicaments
                 @enderror
               </div>
         
-
-              <!-- Ajoutez ici les autres champs du formulaire -->
+              <div class="form-group mb-3">
+                <label for="fournisseur_id">Fournisseur</label>
+                <select name="fournisseur_id" id="fournisseur_id" class="form-control @error('fournisseur_id') is-invalid @enderror" required>
+                  <option value="">Sélectionnez le Fournisseur</option>
+                  @foreach($fournisseurs as $fournisseur)
+                  <option value="{{ $fournisseur->id }}">{{ $fournisseur->nom_societe }}</option>
+                  @endforeach
+                </select>
+                <div class="invalid-feedback">
+                  Veuillez sélectionner le Fournisseur.
+                </div>
+                @error('fournisseur_id')
+                <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
+              </div>
+              
 
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>

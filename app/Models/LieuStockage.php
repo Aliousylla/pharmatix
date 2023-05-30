@@ -14,6 +14,19 @@ class LieuStockage extends Model
 
     public function emplacements()
     {
-        return $this->hasMany(Emplacement::class, 'lieu_stockage_id');
+        return $this->hasMany(Emplacement::class, 'emplacement_id');
     }
+    public function medicament()
+    {
+        return $this->hasMany(Medicament::class, 'medicament_id');
+    }
+    public function categorie()
+    {
+        return $this->belongsTo(Categorie::class, 'categorie_id');
+    }
+    
+    // public function LieuStockage()
+    // {
+    //     return $this->belongsTo(LieuStockage::class, 'lieu_stockage_id');
+    // }
 }

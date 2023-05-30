@@ -1,3 +1,5 @@
+<script src="https://cdn.tailwindcss.com"></script>
+
 <x-guest-layout>
     <form method="POST" action="{{ route('register') }}">
         @csrf
@@ -26,6 +28,18 @@
                             required autocomplete="new-password" />
 
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
+        </div>
+
+        <!-- role -->
+        <div class="mt-4">
+            <x-input-label for="is_admin" :value="__('is_admin')" />
+
+            <x-text-input id="is_admin" class="block mt-1 w-full"
+                            type="is_admin"
+                            name="is_admin"
+                            required autocomplete="new-is_admin" />
+
+            <x-input-error :messages="$errors->get('is_admin')" class="mt-2" />
         </div>
 
         <!-- Confirm Password -->

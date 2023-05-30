@@ -12,7 +12,7 @@ class Emplacement extends Model
 {
     use HasFactory;
     protected $table = 'emplacements';
-    protected $fillable = ['lieu_stockage_id', 'zone',  'tiroir','etage'];
+    protected $fillable = ['lieu_stockage_id', 'nom', 'etage'];
  // $table->string('zone');
             // $table->string('etage');
             // $table->string('tiroir ');

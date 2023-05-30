@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Categorie;
 use App\Models\Emplacement;
+use App\Models\Fournisseur;
 use App\Models\LieuStockage;
 use App\Models\Medicament;
 use Illuminate\Http\Request;
@@ -17,7 +18,8 @@ class MedicamentController extends Controller
         $categories = Categorie::all();
         $emplacements = Emplacement::all();
         $lieuStockages = LieuStockage::all();
-        return view('medicaments.index', compact('medicaments','categories','emplacements','lieuStockages'));
+        $fournisseurs = Fournisseur::all();
+        return view('medicaments.index', compact('medicaments','categories','emplacements','lieuStockages','fournisseurs'));
     }
 
     public function create()
@@ -43,6 +45,9 @@ class MedicamentController extends Controller
             'date_expiration' => 'required',
             'categorie_id' => 'required',
             'emplacement_id' => 'required',
+            'lieu_stockage_id' => 'required',
+            'fournisseur_id' => 'required',
+            
         ]);
 
         // Créer un nouveau médicament
@@ -58,7 +63,8 @@ class MedicamentController extends Controller
         $categories = Categorie::all();
         $emplacements = Emplacement::all();
         $lieuStockages = LieuStockage::all();
-        return view('medicaments.show', compact('medicament','categories','emplacements','lieuStockages'));
+        $fournisseurs = Fournisseur::all();
+        return view('medicaments.show', compact('medicament','categories','emplacements','lieuStockages','fournisseurs'));
     }
 
     public function edit($id)
@@ -67,7 +73,8 @@ class MedicamentController extends Controller
         $categories = Categorie::all();
         $emplacements = Emplacement::all();
         $lieuStockages = LieuStockage::all();
-        return view('medicaments.edit', compact('medicament','categories','emplacements','lieuStockages'));
+        $fournisseurs = Fournisseur::all();
+        return view('medicaments.edit', compact('medicament','categories','emplacements','lieuStockages','fournisseurs'));
     }
 
     public function update(Request $request, $id)
@@ -83,6 +90,8 @@ class MedicamentController extends Controller
             'date_expiration' => 'required',
             'categorie_id' => 'required',
             'emplacement_id' => 'required',
+            'lieu_stockage_id' => 'required',
+            'fournisseur_id' => 'required',
         ]);
 
         // Rechercher le médicament à mettre à jour

@@ -26,6 +26,7 @@ class MedicamentFactory extends Factory
             'date_expiration' => $faker->date,
             'categorie_id' => Categorie::factory(),
             'emplacement_id' => Emplacement::factory(),
+            'lieu_stockage_id' => Categorie::factory(),
         ];
     }
 

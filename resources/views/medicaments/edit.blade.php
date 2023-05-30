@@ -106,6 +106,58 @@
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
         </div>
+        <div class="form-group mb-3">
+            <label for="lieu_stockage_id">lieu de stockage</label>
+            <select name="lieu_stockage_id" id="lieu_stockage_id" class="form-control @error('lieu_stockage_id') is-invalid @enderror" required>
+                <option value="">Sélectionnez le lieu de stockage</option>
+                @foreach($lieuStockages as $lieuStockage)
+                    <option value="{{ $lieuStockage->id }}" {{ $medicament->lieu_stockage_id == $lieuStockage->id ? 'selected' : '' }}>{{ $lieuStockage->nom}}</option>
+                @endforeach
+            </select>
+            <div class="invalid-feedback">
+                Veuillez sélectionner le lieu de stockage.
+            </div>
+            @error('lieus_de_tockage_id')
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
+        </div>
+
+
+        
+        <div class="form-group mb-3">
+          <label for="emplacement_id">Emplacement</label>
+          <select name="emplacement_id" id="emplacement_id" class="form-control @error('emplacement_id') is-invalid @enderror" required>
+              <option value="">Sélectionnez une Emplacement</option>
+              @foreach($emplacements as $emplacement)
+                  <option value="{{ $emplacement->id }}" {{ $medicament->emplacement_id == $emplacement->id ? 'selected' : '' }}>{{ $emplacement->nom }}</option>
+              @endforeach
+          </select>
+          <div class="invalid-feedback">
+              Veuillez sélectionner une Emplacement.
+          </div>
+          @error('emplacement_id')
+              <div class="alert alert-danger">{{ $message }}</div>
+          @enderror
+      </div>
+           
+      
+           
+
+            <div class="form-group mb-3">
+              <label for="fournisseur_id">Fournisseur</label>
+              <select name="fournisseur_id" id="fournisseur_id" class="form-control @error('fournisseur_id') is-invalid @enderror" required>
+                  <option value="">Sélectionnez un Fournisseur</option>
+                  @foreach($fournisseurs as $fournisseur)
+                      <option value="{{ $fournisseur->id }}" {{ $medicament->fournisseur_id == $fournisseur->id ? 'selected' : '' }}>{{ $fournisseur->nom_societe }}</option>
+                  @endforeach
+              </select>
+              <div class="invalid-feedback">
+                  Veuillez sélectionner un Fournisseur.
+              </div>
+              @error('fournisseur_id')
+                  <div class="alert alert-danger">{{ $message }}</div>
+              @enderror
+          </div>
     
         <!-- Autres champs pertinents -->
     
