@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('ventes', function (Blueprint $table) {
             $table->id();
-            // $table->unsignedBigInteger('medicament_id');
+            
             $table->integer('quantite_vendue');
             $table->decimal('prix_unitaire_vente', 8, 2);
             $table->date('date_vente');

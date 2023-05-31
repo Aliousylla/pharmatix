@@ -72,7 +72,7 @@ Liste des médicaments
   <body>
     
     <div class="container">
-      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal">Créer un médicament</button>
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal">Créer un médicament <i class="fa fa-plus-circle" aria-hidden="true"></i></button>
     </div>
 
     <!-- Modal -->

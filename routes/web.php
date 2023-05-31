@@ -85,9 +85,10 @@ Route::delete('/details-commande/{detailsCommande}', [DetailsCommandeController:
 
 // Routes pour les ventes
 Route::get('/ventes', [VenteController::class, 'index'])->name('ventes.index');
-Route::get('/ventes/create', [VenteController::class, 'create'])->name('ventes.create');
+Route::post('/ventes/ajouterAuPanier', [VenteController::class, 'ajouterAuPanier'])->name('ventes.ajouterAuPanier');
 Route::post('/ventes', [VenteController::class, 'store'])->name('ventes.store');
-Route::get('/ventes/{vente}', [VenteController::class, 'show'])->name('ventes.show');
+Route::post('/ventes', [VenteController::class, 'validerVente'])->name('vente.valider-vente');
+Route::get('/ventes/{vente}', [VenteController::class, 'afficherPanier'])->name('ventes.afficherPanier');
 Route::get('/ventes/{vente}/edit', [VenteController::class, 'edit'])->name('ventes.edit');
 Route::put('/ventes/{vente}', [VenteController::class, 'update'])->name('ventes.update');
 Route::delete('/ventes/{vente}', [VenteController::class, 'destroy'])->name('ventes.destroy');
