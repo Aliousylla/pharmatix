@@ -58,7 +58,7 @@ class VenteController extends Controller
                 $total += $item['prix_total'];
             }
     
-            return view('ventes.index', compact('panier', 'total'));
+            return view('ventes.create', compact('panier', 'total'));
         } catch (\Throwable $th) {
             return redirect()->back()->with('error', 'Une erreur est survenue lors de la génération du panier.');
         }
@@ -81,39 +81,44 @@ class VenteController extends Controller
         // Réinitialiser le panier
         $request->session()->forget('panier');
 
-        return redirect()->route('ventes.index')->with('success', 'La vente a été enregistrée.');
+        return redirect()->route('ventes.create')->with('success', 'La vente a été enregistrée.');
     }
 
     public function create()
     {
-        return view('ventes.create');
+        $ventes =Vente::all();
+        $medicaments = Medicament::all();
+        $categories = Categorie::all();
+     
+        return  view('ventes.create', compact('ventes','medicaments','categories'));
     }
+    
 
-    // public function store(Request $request)
-    // {
-    //     $medicaments = $request->input('medicament');
-    //     $quantites = $request->input('quantite_vendue');
+    public function store(Request $request)
+    {
+        $medicaments = $request->input('medicament');
+        $quantites = $request->input('quantite_vendue');
         
-    //     foreach ($medicaments as $index => $medicamentId) {
-    //         $medicament = Medicament::find($medicamentId);
+        foreach ($medicaments as $index => $medicamentId) {
+            $medicament = Medicament::find($medicamentId);
             
-    //         if ($medicament) {
-    //             $vente = new Vente();
-    //             $vente->medicament_id = $medicamentId;
-    //             $vente->quantite_vendue = $quantites[$index];
-    //             $vente->prix_total = $quantites[$index] * $medicament->prix_unitaire;
+            if ($medicament) {
+                $vente = new Vente();
+                $vente->medicament_id = $medicamentId;
+                $vente->quantite_vendue = $quantites[$index];
+                $vente->prix_total = $quantites[$index] * $medicament->prix_unitaire;
                 
-    //             // Diminuer la quantité vendue dans la base de données
-    //             $medicament->quantite_en_stock -= $quantites[$index];
-    //             $medicament->save();
+                // Diminuer la quantité vendue dans la base de données
+                $medicament->quantite_en_stock -= $quantites[$index];
+                $medicament->save();
                 
-    //             // Enregistrez la vente dans la base de données
-    //             $vente->save();
-    //         }
-    //     }
+                // Enregistrez la vente dans la base de données
+                $vente->save();
+            }
+        }
         
-    //     return redirect()->route('vente.index')->with('success', 'La vente a été enregistrée avec succès.');
-    // }
+        return redirect()->route('vente.index')->with('success', 'La vente a été enregistrée avec succès.');
+    }
         // // Valider les données du formulaire
         // $validatedData = $request->validate([
         //     'medicament_id' => 'required',
@@ -173,4 +178,16 @@ class VenteController extends Controller
         // Rediriger vers la liste des ventes avec un message de succès
         return redirect()->route('ventes.index')->with('success', 'La vente a été supprimée avec succès.');
     }
+
+    public function searchMedicamentAutocomplete(Request $request)
+{
+    $term = $request->input('term');
+    $medicaments = Medicament::where('nom', 'LIKE', '%' . $term . '%')
+                             ->select('nom', 'prix_unitaire','quantite_en_stock','date_expiration','id')
+                             ->get();
+    return response()->json($medicaments);
+}
+    
+    
+
 }

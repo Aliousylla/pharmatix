@@ -9,34 +9,40 @@ Les transactions
     <thead>
       <tr>
         <th scope="col">#</th>
-        <th scope="col">Medicaments</th>
-        <th scope="col">prix_unitaire</th>
-        <th scope="col">quantite_vendue</th>
-        <th scope="col">date_vente</th>
         <th scope="col">categorie</th>
+        <th scope="col">Medicaments</th>
+        <th scope="col">prix unitaire</th>
+        <th scope="col">quantite vendue</th>
+        <th scope="col">quantite en stock</th>
+        <th scope="col">Total</th>
         <th scope="col">Action</th>
       </tr>
     </thead>
     <tfoot>
       <tr>
         <th scope="col">#</th>
-        <th scope="col">Medicaments</th>
-        <th scope="col">prix_unitaire</th>
-        <th scope="col">quantite_vendue</th>
-        <th scope="col">date_vente</th>
         <th scope="col">categorie</th>
+        <th scope="col">Medicaments</th>
+        <th scope="col">prix unitaire</th>
+        <th scope="col">quantite vendue</th>
+        <th scope="col">date vente</th>
+        <th scope="col">Total</th>      
         <th scope="col">Action</th>
         </tr>
     </tfoot>
     <tbody>
-      @foreach($ventes as $vente)
+      @foreach($medicaments as $medicament)
       <tr>
-        <th scope="row">{{ $vente->id }}</th>
-        <td>{{ $vente->medicament->nom }}</td>
-        <td>{{ $vente->prix_unitaire_vente }}</td>
-        <td>{{ $vente->quantite_vendue }}</td>
-        <td>{{ $vente->date_vente }}</td>
-        <td>{{ $vente->medicament->categorie->nom }}</td>
+        <th scope="row">{{ $medicament->id }}</th>
+        <td>{{ $medicament->categorie->nom }}</td>
+        <td>{{ $medicament->nom }}</td>
+        <td>{{ $medicament->prix_unitaire }}</td>
+        <td>{{ $medicament->ventes->sum('quantite_vendue') }}</td>
+        <td>{{ $medicament->quantite_en_stock }}</td>
+        <td>{{ $medicament->ventes->sum(function ($vente) {
+          return $vente->quantite_vendue * $vente->prix_unitaire_vente;
+      }) }}</td>
+        
         <td>
           {{-- <a href="{{ route('fournisseurs.edit', $fournisseur->id) }}" class="btn btn-primary">Modifier</a> --}}
 

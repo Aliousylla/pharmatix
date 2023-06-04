@@ -18,6 +18,6 @@ class Fournisseur extends Model
     }
     public function medicament()
     {
-        return $this->hasMany(Categorie::class, 'fournisseur_id');
+        return $this->hasMany(Medicament::class, 'fournisseur_id');
     }
 }

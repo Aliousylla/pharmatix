@@ -1,10 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Http\Controllers\Controller;
 use App\Models\Emplacement;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+
+use App\Models\LieuStockage;
 
 class EmplacementController extends Controller
 {
@@ -75,13 +76,32 @@ class EmplacementController extends Controller
 
     public function destroy($id)
     {
-        // Rechercher l'emplacement à supprimer
         $emplacement = Emplacement::findOrFail($id);
-
-        // Supprimer l'emplacement
-        $emplacement->delete();
-
-        // Rediriger vers la liste des emplacements avec un message de succès
+        $emplacement->delete();   
         return redirect()->route('emplacements.index')->with('success', 'L\'emplacement a été supprimé avec succès.');
     }
+
+    
+    public function getEmplacements($lieuStockageId)
+    {
+        $emplacements = Emplacement::where('lieu_stockage_id', $lieuStockageId)->get();
+        
+        return response()->json($emplacements);
+        
+    }
+    
+
+    // public function getByCategorie($categorieId)
+    // {
+        
+    // }
+// public function getEmplacementsByLieuStockage($id)
+// {
+//     $lieuStockage = LieuStockage::findOrFail($id);
+//     $emplacements = $lieuStockage->emplacements;
+
+//     return response()->json($emplacements);
+// }
+
+
 }

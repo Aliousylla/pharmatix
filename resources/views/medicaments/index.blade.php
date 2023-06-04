@@ -5,7 +5,8 @@ Liste des médicaments
 
     
    @section('tableau')
-   <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+   
+   <table class="table table-bordered  " id="dataTable" width="100%" cellspacing="0">
     <thead>
       <tr>
         <th scope="col">#</th>
@@ -38,20 +39,7 @@ Liste des médicaments
         <td>{{ $medicament->date_expiration }}</td>
         <td>{{ $medicament->categorie->nom }}</td>
         <td>
-          {{-- <a href="{{ route('medicaments.edit', $medicament->id) }}" class="btn btn-primary">Modifier</a> --}}
-
-          @auth
-          @if (Auth::user()->is_admin='admin')
           <a href="{{ route('medicaments.show', $medicament->id) }}" class="btn btn-primary">Afficher</a>
-
-          @endif
-
-          @endauth
-          {{-- <form action="{{ route('medicaments.destroy', $medicament->id) }}" method="POST" style="display: inline-block;">
-            @csrf
-            @method('DELETE')
-            <button type="submit" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce médicament ?')">Supprimer</button>
-          </form> --}}
         </td>
       </tr>
       @endforeach
@@ -241,8 +229,57 @@ Liste des médicaments
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+
+
+
+
+
+    document.getElementById('categorie_id').addEventListener('change', function() {
+    var categorieId = this.value; 
+    fetch('/lieux-stockage/' + categorieId)
+        .then(response => response.json())
+        .then(data => {
+            var lieuStockageOptions = data.map(function(lieuStockage) {
+                return '<option value="' + lieuStockage.id + '">' + lieuStockage.nom + '</option>';
+            });
+            lieuStockageOptions.unshift('<option value="">Sélectionnez un lieu de stockage</option>');
+            document.getElementById('lieu_stockage_id').innerHTML = lieuStockageOptions.join('');
+        })
+        .catch(error => {
+            console.error('Une erreur s\'est produite:', error);
+        });
+});
+
+document.getElementById('lieu_stockage_id').addEventListener('change', function() {
+    var lieuStockageId = this.value; 
+    var emplacementSelect = document.getElementById('emplacement_id');
+    emplacementSelect.innerHTML = '<option value="">Chargement des emplacements...</option>';
+
+    fetch('/emplacements/' + lieuStockageId)
+        .then(response => response.json())
+        .then(data => {
+          console.log(data)
+            var emplacementOptions = data.map(function(emplacement) {
+                return '<option value="' + emplacement.id + '">' + emplacement.nom + '</option>';
+            });
+
+            emplacementSelect.innerHTML = '<option value="">Sélectionnez un emplacement</option>' + emplacementOptions.join('');
+        })
+        .catch(error => {
+            console.error('Une erreur s\'est produite:', error);
+            emplacementSelect.innerHTML = '<option value="">Erreur lors du chargement des emplacements</option>';
+        });
+});
+
+
+ 
+
+</script>
+
   </body>
 </html>
+
 
    @endsection
     

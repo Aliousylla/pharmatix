@@ -80,4 +80,10 @@ class LieuStockageController extends Controller
         // Rediriger vers la liste des lieux de stockage avec un message de succès
         return redirect()->route('lieux_stockage.index')->with('success', 'Le lieu de stockage a été supprimé avec succès.');
     }
+    public function getByCategorie($categorieId)
+{
+    $lieuxStockage = LieuStockage::where('categorie_id', $categorieId)->get();
+    return response()->json($lieuxStockage);
+}
+
 }

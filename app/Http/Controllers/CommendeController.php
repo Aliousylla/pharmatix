@@ -5,14 +5,18 @@ namespace App\Http\Controllers;
 use App\Models\Commande;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Fournisseur;
+use App\Models\Medicament;
 
 class CommendeController extends Controller
 {
     //
     public function index()
     {
+        $fournisseurs = Fournisseur::all();
+        $medicaments = Medicament::all(); 
         $commandes = Commande::all();
-        return view('commandes.index', compact('commandes'));
+        return view('commandes.index', compact('commandes','fournisseurs','medicaments'));
     }
 
     public function create()

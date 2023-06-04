@@ -40,13 +40,13 @@
     
     <!-- Nav Item - Utilities Collapse Menu -->
     <li class="nav-item">
-        <a class="nav-link" href="charts.html">
+        <a class="nav-link" href="{{ asset('inventaires') }}">
             <i class="fa fa-archive"></i>
             <span>Inventaire</span></a>
     </li>
     
     <li class="nav-item">
-        <a class="nav-link" href="charts.html">
+        <a class="nav-link" href="{{ asset('ventes') }}">
             <i class="fa fa-database"></i>
             <span>Transaction</span></a>
     </li>

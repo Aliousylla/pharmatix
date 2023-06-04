@@ -22,7 +22,7 @@ class Medicament extends Model
     
     public function fournisseur()
     {
-        return $this->belongsTo(Categorie::class, 'fournisseur_id');
+        return $this->belongsTo(Fournisseur::class, 'fournisseur_id');
     }
     public function LieuStockage()
     {

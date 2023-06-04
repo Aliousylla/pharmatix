@@ -21,7 +21,7 @@
         </div>
     </form>
 <div>
-    <a href="{{ asset('ventes') }}">pvs</a>
+    <a href="{{ asset('ventes/create') }}">pvs</a>
 </div>
     <!-- Topbar Navbar -->
     <ul class="navbar-nav ml-auto">

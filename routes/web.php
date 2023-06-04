@@ -7,6 +7,8 @@ use App\Http\Controllers\CommendeController;
 use App\Http\Controllers\DetailsCommandeController;
 use App\Http\Controllers\EmplacementController;
 use App\Http\Controllers\FournisseurController;
+use App\Http\Controllers\InventaireController;
+use App\Http\Controllers\LieuStockageController;
 use App\Http\Controllers\MedicamentController;
 use App\Http\Controllers\VenteController;
 
@@ -85,6 +87,7 @@ Route::delete('/details-commande/{detailsCommande}', [DetailsCommandeController:
 
 // Routes pour les ventes
 Route::get('/ventes', [VenteController::class, 'index'])->name('ventes.index');
+Route::get('/ventes/create', [VenteController::class, 'create'])->name('ventes.create');
 Route::post('/ventes/ajouterAuPanier', [VenteController::class, 'ajouterAuPanier'])->name('ventes.ajouterAuPanier');
 Route::post('/ventes', [VenteController::class, 'store'])->name('ventes.store');
 Route::post('/ventes', [VenteController::class, 'validerVente'])->name('vente.valider-vente');
@@ -92,6 +95,8 @@ Route::get('/ventes/{vente}', [VenteController::class, 'afficherPanier'])->name(
 Route::get('/ventes/{vente}/edit', [VenteController::class, 'edit'])->name('ventes.edit');
 Route::put('/ventes/{vente}', [VenteController::class, 'update'])->name('ventes.update');
 Route::delete('/ventes/{vente}', [VenteController::class, 'destroy'])->name('ventes.destroy');
+Route::get('/search-medicament-autocomplete', [VenteController::class, 'searchMedicamentAutocomplete'])->name('searchMedicamentAutocomplete');
+
 
 // Routes pour les emplacements
 Route::get('/emplacements', [EmplacementController::class, 'index'])->name('emplacements.index');
@@ -101,6 +106,22 @@ Route::get('/emplacements/{emplacement}', [EmplacementController::class, 'show']
 Route::get('/emplacements/{emplacement}/edit', [EmplacementController::class, 'edit'])->name('emplacements.edit');
 Route::put('/emplacements/{emplacement}', [EmplacementController::class, 'update'])->name('emplacements.update');
 Route::delete('/emplacements/{emplacement}', [EmplacementController::class, 'destroy'])->name('emplacements.destroy');
+
+// Route::get('/emplacements/{lieuStockageId}', [EmplacementController::class, 'getEmplacements']);
+// Route::get('/lieu-stockage/{id}/emplacements', [EmplacementController::class,'getEmplacements'])->name('getEmplacementsByLieuStockage');
+// Route::get('/emplacement/{lieuStockageId}', 'EmplacementController@getEmplacements')->name('emplacement.get');
+
+// Route::get('/lieu-stockage/{lieuStockageId}/emplacements', 'EmplacementController@getEmplacements');
+Route::get('/emplacements/{lieuStockageId}', [EmplacementController::class, 'getEmplacements']);
+
+// Routes pour lieu stockage
+Route::get('/lieux-stockage/{categorieId}', [LieuStockageController::class, 'getByCategorie']);
+Route::get('/lieux-stockage/{lieuStockage}', [LieuStockageController::class, 'show'])->name('lieux_stockage.show');
+Route::get('/lieu-stockage/{id}/emplacements', 'LieuStockageController@getEmplacements');
+
+// Routes pour lieu inventaires
+Route::get('/inventaires', [InventaireController::class, 'index'])->name('inventaires.index');
+
 });
 
 require __DIR__.'/auth.php';
