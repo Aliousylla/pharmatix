@@ -7,6 +7,8 @@ use App\Models\Categorie;
 use App\Models\Medicament;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Ligne;
+use Psy\Readline\Hoa\Console;
 
 class VenteController extends Controller
 {
@@ -14,74 +16,12 @@ class VenteController extends Controller
     public function index()
     {
         $ventes = Vente::all();
-        $medicaments = Medicament::all();
+        $lignes= Ligne::all();
+        
+
         $categories = Categorie::all();
         
-        return view('ventes.index', compact('ventes','medicaments','categories'));
-    }
-
-    public function ajouterAuPanier(Request $request)
-{
-   try {
-    $medicament = Medicament::findOrFail($request->medicament_id);
-
-    $item = [
-        'medicament' => $medicament,
-        'quantite_vendue' => $request->quantite,
-        'prix_total' => $medicament->prix_unitaire * $request->quantite
-    ];
-
-    $panier = [];
-
-    if ($request->session()->has('panier')) {
-        $panier = $request->session()->get('panier');
-    }
-
-    $panier[] = $item;
-
-    $request->session()->put('panier', $panier);
-
-    return redirect()->back()->with('success', 'Le médicament a été ajouté au panier.');
-   } catch (\Throwable $th) {
-    return redirect()->back()->with('error', 'Une erreur est survenue lors de l\'ajout du médicament au panier.');
-   }
-}
-
-    
-    public function afficherPanier()
-    {
-        try {
-            $panier = session()->get('panier', []);
-            $total = 0;
-    
-            foreach ($panier as $item) {
-                $total += $item['prix_total'];
-            }
-    
-            return view('ventes.create', compact('panier', 'total'));
-        } catch (\Throwable $th) {
-            return redirect()->back()->with('error', 'Une erreur est survenue lors de la génération du panier.');
-        }
-    }
-
-    public function validerVente(Request $request)
-    {
-        $panier = $request->session()->get('panier');
-
-        // Enregistrer la vente dans la base de données
-        foreach ($panier as $item) {
-            $vente = new Vente();
-            $vente->medicament_id = $item['medicament']->id;
-            $vente->quantite_vendue = $item['quantite'];
-            $vente->prix_unitaire_vente = $item['medicament']->prix_unitaire;
-            $vente->date_vente = date('Y-m-d');
-            $vente->save();
-        }
-
-        // Réinitialiser le panier
-        $request->session()->forget('panier');
-
-        return redirect()->route('ventes.create')->with('success', 'La vente a été enregistrée.');
+        return view('ventes.index',compact('ventes','lignes','categories'));
     }
 
     public function create()
@@ -93,52 +33,51 @@ class VenteController extends Controller
         return  view('ventes.create', compact('ventes','medicaments','categories'));
     }
     
-
     public function store(Request $request)
-    {
-        $medicaments = $request->input('medicament');
-        $quantites = $request->input('quantite_vendue');
-        
-        foreach ($medicaments as $index => $medicamentId) {
-            $medicament = Medicament::find($medicamentId);
-            
-            if ($medicament) {
-                $vente = new Vente();
-                $vente->medicament_id = $medicamentId;
-                $vente->quantite_vendue = $quantites[$index];
-                $vente->prix_total = $quantites[$index] * $medicament->prix_unitaire;
-                
-                // Diminuer la quantité vendue dans la base de données
-                $medicament->quantite_en_stock -= $quantites[$index];
-                $medicament->save();
-                
-                // Enregistrez la vente dans la base de données
-                $vente->save();
-            }
+{
+    // Validation des champs
+    $validatedData = $request->validate([
+        'medicament_id.*' => 'required',
+        'quantite_vendue.*' => 'required|numeric',
+    ]);
+
+    try {
+        $vente = Vente::create([
+            'total' => 0,
+        ]);
+        // Parcourir toutes les lignes
+        for ($i = 0; $i < count($request->nom); $i++) {
+            $ligne = Ligne::create([
+                'vente_id' => $vente->id,
+                'medicament_id' => $request->medicament_id[$i],
+                'quantite_vendue' => $request->quantite_vendue[$i],
+             
+            ]);
+
+            // Mettez à jour le total de la vente
+            $vente->total += $ligne->quantite_vendue * $ligne->medicament->prix_unitaire;
         }
-        
-        return redirect()->route('vente.index')->with('success', 'La vente a été enregistrée avec succès.');
-    }
-        // // Valider les données du formulaire
-        // $validatedData = $request->validate([
-        //     'medicament_id' => 'required',
-        //     'quantite_vendue' => 'required',
-        //     'prix_unitaire_vente' => 'required',
-        //     'date_vente' => 'required',
-        // ]);
 
-        // // Créer une nouvelle vente
-        // $vente = Vente::create($validatedData);
-
-        // // Rediriger vers la liste des ventes avec un message de succès
-        // return redirect()->route('ventes.index')->with('success', 'La vente a été créée avec succès.');
         
+        $vente->save();
     
+        
+        return redirect()->route('ventes.create')->with(['success' => 'Vente enregistrée avec succès']);
+        
+
+    } catch (\Throwable $th) {
+        // En cas d'erreur, redirigez avec un message d'erreur
+        return view('ventes.create',with('error', 'Une erreur est survenue lors de l\'enregistrement de la vente.'));
+    }
+}
+  
 
     public function show($id)
     {
-        $vente = Vente::findOrFail($id);
-        return view('ventes.show', compact('vente'));
+        $ventes = Vente::findOrFail($id);
+        $lignes = Ligne::where('vente_id',$id)->get();
+        
+        return view('ventes.show', compact('ventes','lignes'));
     }
 
     public function edit($id)
@@ -187,7 +126,4 @@ class VenteController extends Controller
                              ->get();
     return response()->json($medicaments);
 }
-    
-    
-
 }

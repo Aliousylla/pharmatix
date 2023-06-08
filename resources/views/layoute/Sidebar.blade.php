@@ -5,7 +5,7 @@
         <div class="sidebar-brand-icon rotate-n-15">
             <i class="fas fa-laugh-wink"></i>
         </div>
-        <div class="sidebar-brand-text mx-3">sabs <sup>2</sup></div>
+        <div class="sidebar-brand-text mx-3">{{ Auth::user()->name }} <sup></sup></div>
     </a>
 
     <!-- Divider -->
@@ -13,7 +13,7 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item">
-        <a class="nav-link" href="index.html">
+        <a class="nav-link" href="{{ asset('dashboard') }}">
             <i class="fa fa-home fa-fw"></i>
             <span>Dashboard</span></a>
     </li>

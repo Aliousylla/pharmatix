@@ -16,6 +16,7 @@
         <table class="table table-bordered" id="" width="100%" cellspacing="0">
             <thead>
                 <tr>
+                    <th scope="col">#</th>
                     <th scope="col">Médicaments</th>
                     <th scope="col">Prix</th>
                     <th scope="col">Quantité</th>
@@ -23,21 +24,31 @@
                     <th scope="col">Action</th>
                 </tr>
             </thead>
-            <tbody id="tbody">
-                <tr>
-                    <td><input type="text" name="nom[]" class="form-control search-input autocomplete"></td>
-                    <td><input type="text" name="prix_unitaire[]" class="form-control prix_unitaire"></td>
-                    <td>
-                        <input type="text" name="quantite_vendue[]" class="form-control quantite-vendue">
-                        <input type="hidden" name="quantite_en_stock[]" class="quantite-en-stock" data-quantite="">
-                        <span class="text-danger quantite-error" style="display: none;">La quantité demandée n'est pas disponible en stock.</span>
-                    </td>
-                    <td><input type="text" name="total[]" class="form-control total"></td>
-                    <td><button type="button" id="add" class="btn btn-success">+</button></td>
-                </tr>
-            </tbody>
+            <form action="{{ route('ventes.store') }}" method="post">
+                @csrf
+                <tbody id="tbody">
+                    <!-- Boucle pour générer les lignes de médicaments -->
+                    @for ($i = 0; $i < count(old('medicament_id', [''])); $i++)
+                    <tr>
+                        <td><input type="hidden" name="medicament_id[]" class="form-control medicament_id" value="{{ old('medicament_id.' . $i) }}"></td>
+                        <td><input type="text" name="nom[]" class="form-control search-input autocomplete" value="{{ old('nom.' . $i) }}"></td>
+                        <td><input type="text" name="prix_unitaire[]" class="form-control prix_unitaire" value="{{ old('prix_unitaire.' . $i) }}"></td>
+                        <td>
+                            <input type="text" name="quantite_vendue[]" class="form-control quantite-vendue" value="{{ old('quantite_vendue.' . $i) }}">
+                            <input type="hidden" name="quantite_en_stock[]" class="quantite-en-stock" data-quantite="">
+                            <span class="text-danger quantite-error" style="display: none;">La quantité demandée n'est pas disponible en stock.</span>
+                        </td>
+                        <td><input type="text" name="total[]" class="form-control total"></td>
+                        <td><button type="button" id="add" class="btn btn-success">+</button></td>
+                    </tr>
+                    @endfor
+                </tbody>
+                <button type="button" id="submitBtn" class="btn btn-primary valider">Valider</button>
+            </form>
+            
+            
+            
         </table>
-        <button type="button" id="valider" class="btn btn-primary">Valider</button>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -46,10 +57,11 @@
     <script type="text/javascript">
         $(document).ready(function() {
             var i = 1;
-
+            var medicamentsSelectionnes = []
             $('#add').click(function() {
                 i++;
                 var newRow = '<tr id="row' + i + '">' +
+                    '<td><input type="hidden" name="medicament_id[]" class="form-control medicament_id"></td>'+
                     '<td><input type="text" name="nom[]" class="form-control search-input autocomplete nom"></td>' +
                     '<td><input type="text" name="prix_unitaire[]" class="form-control prix_unitaire"></td>' +
                     '<td><input type="text" name="quantite_vendue[]" class="form-control quantite-vendue"></td>' +
@@ -72,7 +84,8 @@
                         fetch("{{ route('searchMedicamentAutocomplete') }}?term=" + term)
                             .then(response => response.json())
                             .then(function(data) {
-                                response(data.map(item => ({ value: item, label: item.nom, prix_unitaire: item.prix_unitaire })));
+                            response(data.map(item => ({ value: item, label: item.nom, prix_unitaire: item.prix_unitaire,medicament_id: item.id})));
+                                
                             });
                     },
                     minLength: 2,
@@ -80,6 +93,8 @@
                         $(this).val(ui.item.label);
                         $(this).data('prix', ui.item.prix_unitaire);
                         $(this).closest('tr').find('.prix_unitaire').val(ui.item.prix_unitaire);
+                        $(this).closest('tr').find('.medicament_id').val(ui.item.medicament_id);
+
                         return false;
                     }
                 });
@@ -109,7 +124,38 @@
     $('#row{{ $index + 1 }} .quantite-en-stock').val('{{ $quantiteEnStock }}');
 @endforeach
 
-        });
+
+$('#submitBtn').click(function() {
+    var form = $('<form></form>').attr('action', "{{ route('ventes.store') }}").attr('method', 'post');
+    form.append($('<input>').attr('type', 'hidden').attr('name', '_token').val('{{ csrf_token() }}'));
+
+    $('#tbody tr').each(function() {
+        var medicamentId = $(this).find('.medicament_id').val();
+        var nom = $(this).find('.search-input').val();
+        var prixUnitaire = $(this).find('.prix_unitaire').val();
+        var quantiteVendue = $(this).find('.quantite-vendue').val();
+
+        form.append($('<input>').attr('type', 'hidden').attr('name', 'medicament_id[]').val(medicamentId));
+        form.append($('<input>').attr('type', 'hidden').attr('name', 'nom[]').val(nom));
+        form.append($('<input>').attr('type', 'hidden').attr('name', 'prix_unitaire[]').val(prixUnitaire));
+        form.append($('<input>').attr('type', 'hidden').attr('name', 'quantite_vendue[]').val(quantiteVendue));
+    });
+
+    $('body').append(form);
+    form.submit();
+});
+});    
     </script>
+
+
+
+
+
+
+
+
+
+
+
 </body>
 </html>

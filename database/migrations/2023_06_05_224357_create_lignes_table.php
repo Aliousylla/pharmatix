@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('commandes', function (Blueprint $table) {
+        Schema::create('lignes', function (Blueprint $table) {
             $table->id();
-            // $table->unsignedBigInteger('fournisseur_id');
-            $table->string('statut');
-            $table->string('total');
+            $table->foreignId('medicament_id')->constrained();
+            $table->foreignId('vente_id')->constrained();
+            $table->string('quantite_vendue');
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('commandes');
+        Schema::dropIfExists('lignes');
     }
 };

@@ -11,7 +11,7 @@ class DetailCommande extends Model
 {
     use HasFactory;
     protected $table = 'details_commande';
-    protected $fillable = ['commande_id', 'medicament_id', 'quantite_commandee', 'prix_unitaire_commande'];
+    protected $fillable = ['commande_id','fournisseur_id', 'quantite_commandee', 'prix_unitaire_commande'];
 
     public function commande()
     {

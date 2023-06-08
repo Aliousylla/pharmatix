@@ -45,7 +45,6 @@ class MedicamentController extends Controller
             'date_expiration' => 'required',
             'categorie_id' => 'required',
             'emplacement_id' => 'required',
-            'lieu_stockage_id' => 'required',
             'fournisseur_id' => 'required',
             
         ]);
@@ -90,7 +89,6 @@ class MedicamentController extends Controller
             'date_expiration' => 'required',
             'categorie_id' => 'required',
             'emplacement_id' => 'required',
-            'lieu_stockage_id' => 'required',
             'fournisseur_id' => 'required',
         ]);
 

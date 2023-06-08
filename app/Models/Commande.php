@@ -11,12 +11,8 @@ class Commande extends Model
 {
     use HasFactory;
     protected $table = 'commandes';
-    protected $fillable = ['fournisseur_id', 'date_commande', 'statut_commande'];
+    protected $fillable = [ 'date_commande', 'statut_commande','total'];
 
-    public function fournisseur()
-    {
-        return $this->belongsTo(Fournisseur::class, 'fournisseur_id');
-    }
 
     public function detailsCommande()
     {

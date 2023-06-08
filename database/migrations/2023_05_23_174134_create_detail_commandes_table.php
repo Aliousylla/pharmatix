@@ -18,7 +18,8 @@ return new class extends Migration
             $table->integer('quantite_commandee');
             $table->decimal('prix_unitaire_commande', 8, 2);
             $table->foreignId('commande_id')->constrained();
-            $table->foreignId('medicament_id')->constrained();
+            $table->foreignId('fournisseur_id')->constrained();
+
             $table->timestamps();
         });
     }

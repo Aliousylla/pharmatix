@@ -13,20 +13,10 @@ return new class extends Migration
     {
         Schema::create('ventes', function (Blueprint $table) {
             $table->id();
-            
-            $table->integer('quantite_vendue');
-            $table->decimal('prix_unitaire_vente', 8, 2);
-            $table->date('date_vente');
-            $table->foreignId('medicament_id')->constrained();
+            $table->decimal('total', 10, 2);        
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
-        Schema::dropIfExists('ventes');
-    }
+   
 };

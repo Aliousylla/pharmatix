@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Ligne;
 use App\Models\Medicament;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -9,11 +10,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Vente extends Model
 {
     use HasFactory;
-    protected $table = 'ventes';
-    protected $fillable = ['medicament_id', 'quantite_vendue', 'prix_unitaire_vente', 'date_vente'];
-
+    protected $fillable = ['total', 'date_vente'];
+    
+    // Exemple de relation avec le modèle Medicament
     public function medicament()
     {
-        return $this->belongsTo(Medicament::class, 'medicament_id');
+        return $this->belongsTo(Medicament::class);
     }
+    public function lignes()
+    {
+        return $this->hasMany(Ligne::class);
+    }
+
 }

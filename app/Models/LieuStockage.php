@@ -10,7 +10,7 @@ class LieuStockage extends Model
 {
     use HasFactory;
     protected $table = 'lieu_stockages';
-    protected $fillable = ['nom', 'adresse'];
+    protected $fillable = ['nom', 'adresse','categorie_id'];
 
     public function emplacements()
     {

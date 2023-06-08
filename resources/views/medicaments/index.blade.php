@@ -6,7 +6,7 @@ Liste des médicaments
     
    @section('tableau')
    
-   <table class="table table-bordered  " id="dataTable" width="100%" cellspacing="0">
+   <table class="table table-bordered  " id="datatable" width="100%" cellspacing="0">
     <thead>
       <tr>
         <th scope="col">#</th>
@@ -169,21 +169,7 @@ Liste des médicaments
                 @enderror
               </div>
 
-              <div class="form-group mb-3">
-                <label for="lieu_stockage_id">lieu de stockages</label>
-                <select name="lieu_stockage_id" id="lieu_stockage_id" class="form-control @error('lieu_stockage_id') is-invalid @enderror" required>
-                  <option value="">Sélectionnez une catégorie</option>
-                  @foreach($lieuStockages as $lieuStockage)
-                  <option value="{{ $lieuStockage->id }}">{{ $lieuStockage->nom }}</option>
-                  @endforeach
-                </select>
-                <div class="invalid-feedback">
-                  Veuillez sélectionner le lieu de stockage
-                </div>
-                @error('lieu_stockage_id')
-                <div class="alert alert-danger">{{ $message }}</div>
-                @enderror
-              </div>
+              
 
               <div class="form-group mb-3">
                 <label for="emplacement_id">Emplacement</label>
