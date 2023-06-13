@@ -6,7 +6,9 @@ use App\Models\Commande;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Fournisseur;
+use App\Models\Ligne;
 use App\Models\Medicament;
+use App\Models\Vente;
 
 class CommendeController extends Controller
 {
@@ -16,7 +18,9 @@ class CommendeController extends Controller
         $fournisseurs = Fournisseur::all();
         $medicaments = Medicament::all(); 
         $commandes = Commande::all();
-        return view('commandes.index', compact('commandes','fournisseurs','medicaments'));
+        $ventes =Vente::all();
+        $lignes =Ligne::all();
+        return view('commandes.index', compact('commandes','fournisseurs','medicaments','ventes','lignes'));
     }
 
     public function create()

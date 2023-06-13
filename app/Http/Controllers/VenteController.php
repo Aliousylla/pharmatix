@@ -7,6 +7,7 @@ use App\Models\Categorie;
 use App\Models\Medicament;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Fournisseur;
 use App\Models\Ligne;
 use Psy\Readline\Hoa\Console;
 
@@ -33,6 +34,7 @@ class VenteController extends Controller
         return  view('ventes.create', compact('ventes','medicaments','categories'));
     }
     
+    
     public function store(Request $request)
 {
     // Validation des champs
@@ -51,23 +53,25 @@ class VenteController extends Controller
                 'vente_id' => $vente->id,
                 'medicament_id' => $request->medicament_id[$i],
                 'quantite_vendue' => $request->quantite_vendue[$i],
-             
+
             ]);
 
             // Mettez à jour le total de la vente
             $vente->total += $ligne->quantite_vendue * $ligne->medicament->prix_unitaire;
+            Medicament::find($request->medicament_id[$i])->decrement('quantite_en_stock', $request->quantite_vendue[$i]);
+
         }
 
         
         $vente->save();
     
         
-        return redirect()->route('ventes.create')->with(['success' => 'Vente enregistrée avec succès']);
+        return  view('ventes.edit', ['id' => $vente->id, 'total' => $vente->total])->with(['success' => 'Vente enregistrée avec succès']);
         
 
     } catch (\Throwable $th) {
         // En cas d'erreur, redirigez avec un message d'erreur
-        return view('ventes.create',with('error', 'Une erreur est survenue lors de l\'enregistrement de la vente.'));
+        return redirect()->route('ventes.create')->with('error', 'Une erreur est survenue lors de l\'enregistrement de la vente.');
     }
 }
   
@@ -82,8 +86,7 @@ class VenteController extends Controller
 
     public function edit($id)
     {
-        $vente = Vente::findOrFail($id);
-        return view('ventes.edit', compact('vente'));
+        
     }
 
     public function update(Request $request, $id)
@@ -126,4 +129,17 @@ class VenteController extends Controller
                              ->get();
     return response()->json($medicaments);
 }
+
+public function dasboard()
+{
+        $ventes =Vente::all();
+        $medicaments = Medicament::all();
+        $categories = Categorie::all();
+        $fournisseurs = Fournisseur::all();
+       
+        return view('dashboard',compact('ventes','medicaments','categories','fournisseurs'));
+     
+        
+}
+
 }

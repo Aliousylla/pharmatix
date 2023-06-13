@@ -9,24 +9,28 @@ Les transactions
     <thead>
       <tr>
         <th scope="col">#</th>
-        <th scope="col">categorie</th>
+        
         <th scope="col">Medicaments</th>
+        <th scope="col">Quantité De Depart</th>
         <th scope="col">prix unitaire</th>
         <th scope="col">quantite vendue</th>
         <th scope="col">quantite en stock</th>
         <th scope="col">Total</th>
+      
         <th scope="col">Action</th>
       </tr>
     </thead>
     <tfoot>
       <tr>
         <th scope="col">#</th>
-        <th scope="col">categorie</th>
+        
         <th scope="col">Medicaments</th>
+        <th scope="col">Quantité De Depart</th>
         <th scope="col">prix unitaire</th>
         <th scope="col">quantite vendue</th>
         <th scope="col">date vente</th>
-        <th scope="col">Total</th>      
+        <th scope="col">Total</th>    
+        
         <th scope="col">Action</th>
         </tr>
     </tfoot>
@@ -34,14 +38,13 @@ Les transactions
       @foreach($medicaments as $medicament)
       <tr>
         <th scope="row">{{ $medicament->id }}</th>
-        <td>{{ $medicament->categorie->nom }}</td>
+        
         <td>{{ $medicament->nom }}</td>
+        <td>{{ $medicament->quantite_en_stock + $medicament->lignes->sum('quantite_vendue') }}</td>
         <td>{{ $medicament->prix_unitaire }}</td>
-        <td>{{ $medicament->ventes->sum('quantite_vendue') }}</td>
+        <td>{{ $medicament->lignes->sum('quantite_vendue') }}</td>
         <td>{{ $medicament->quantite_en_stock }}</td>
-        <td>{{ $medicament->ventes->sum(function ($vente) {
-          return $vente->quantite_vendue * $vente->prix_unitaire_vente;
-      }) }}</td>
+        <td>{{ $medicament->prix_unitaire * $medicament->lignes->sum('quantite_vendue')}}</td>
         
         <td>
           {{-- <a href="{{ route('fournisseurs.edit', $fournisseur->id) }}" class="btn btn-primary">Modifier</a> --}}

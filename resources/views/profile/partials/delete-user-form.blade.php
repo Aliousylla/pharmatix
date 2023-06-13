@@ -1,4 +1,4 @@
-<section class="space-y-6">
+{{-- <section class="space-y-6">
     <header>
         <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
             {{ __('Delete Account') }}
@@ -52,4 +52,67 @@
             </div>
         </form>
     </x-modal>
+</section> --}}
+
+<section class="space-y-6">
+    <header>
+        <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100 text-danger">
+            {{ __('Supprimer le compte') }}
+        </h2>
+
+        <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+            {{ __('Une fois votre compte supprimé, toutes ses ressources et données seront définitivement supprimées. Avant de supprimer votre compte, veuillez télécharger les données ou informations que vous souhaitez conserver..') }}
+        </p>
+    </header>
+
+    <button
+        type="button"
+        class="btn btn-danger"
+        data-bs-toggle="modal"
+        data-bs-target="#confirm-user-deletion"
+    >{{ __('Supprimer le compte') }}</button>
+
+    <div class="modal fade" id="confirm-user-deletion" tabindex="-1" aria-labelledby="confirm-user-deletion-label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form method="post" action="{{ route('profile.destroy') }}" class="p-6">
+                    @csrf
+                    @method('delete')
+
+                    <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
+                        {{ __('Êtes-vous sûr de vouloir supprimer votre compte ?') }}
+                    </h2>
+
+                    <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                        {{ __('Une fois votre compte supprimé, toutes ses ressources et données seront définitivement supprimées. Veuillez saisir votre mot de passe pour confirmer que vous souhaitez supprimer définitivement votre compte..') }}
+                    </p>
+
+                    <div class="mt-6">
+                        <label for="password" class="form-label sr-only">{{ __('Password') }}</label>
+                        <input
+                            id="password"
+                            name="password"
+                            type="password"
+                            class="form-control mt-1"
+                            placeholder="{{ __('Password') }}"
+                        />
+                        @if($errors->userDeletion->has('password'))
+                            <div class="invalid-feedback mt-2">
+                                {{ $errors->userDeletion->first('password') }}
+                            </div>
+                        @endif
+                    </div>
+
+                    <div class="mt-6 d-flex justify-content-end">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            {{ __('Annuler') }}
+                        </button>
+                        <button type="submit" class="btn btn-danger ml-3">
+                            {{ __('Supprimer le compte') }}
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </section>

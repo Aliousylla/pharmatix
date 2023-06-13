@@ -1,3 +1,7 @@
+@php
+    use Carbon\Carbon;
+    
+@endphp
 @extends('layoute/layout')
 @section('titre')
 Liste des commades
@@ -9,22 +13,24 @@ Liste des commades
     <thead>
       <tr>
         <th scope="col">#</th>
-        <th scope="col">Fournisseurs</th>
+      
         <th scope="col">Medicaments</th>
         <th scope="col">Quantite</th>
         <th scope="col">Date d'expiration</th>
         <th scope="col">Date d'entre</th>
+          <th scope="col">Fournisseurs</th>
         <th scope="col">Action</th>
       </tr>
     </thead>
     <tfoot>
       <tr>
         <th scope="col">#</th>
-        <th scope="col">Fournisseurs</th>
+      
         <th scope="col">Medicaments</th>
         <th scope="col">Quantite</th>
         <th scope="col">Date d'expiration</th>
         <th scope="col">Date d'entre</th>
+          <th scope="col">Fournisseurs</th>
         <th scope="col">Action</th>
         </tr>
     </tfoot>
@@ -32,11 +38,15 @@ Liste des commades
       @foreach($medicaments as $medicament)
       <tr>
         <th scope="row">{{ $medicament->id }}</th>
+        
         <td>{{ $medicament->nom }}</td>
-        <td>{{ $medicament->fournisseur->nom_societe }}</td>
+        
         <td>{{ $medicament->quantite_en_stock }}</td>
-        <td>{{ $medicament->date_expiration }}</td>
-        <td>{{ $medicament->created_at }}</td>
+      
+        <td>{{ Carbon::parse($medicament->date_expiration)->locale('fr')->format('d - F - Y') }}</td>
+        
+        <td>{{ Carbon::parse($medicament->created_at)->locale('fr')->format('d - F - Y - H:i') }}</td>
+        <td>{{ $medicament->fournisseur->nom_societe }}</td>
         <td>
           {{-- <a href="{{ route('fournisseurs.edit', $fournisseur->id) }}" class="btn btn-primary">Modifier</a> --}}
 
@@ -67,10 +77,10 @@ Liste des commades
     
     <div class="container">
         <a ></a>
-      <a  href="{{ asset('medicaments') }}"type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal">Ajouter un fournisseur <i class="fa fa-plus-circle" aria-hidden="true"></i></a>
+      <a  href="{{ asset('medicaments') }}"type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal">Ajouter un commende <i class="fa fa-plus-circle" aria-hidden="true"></i></a>
     </div>
 
-  >
+  
    
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>

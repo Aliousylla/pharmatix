@@ -39,7 +39,20 @@ Liste des médicaments
         <td>{{ $medicament->date_expiration }}</td>
         <td>{{ $medicament->categorie->nom }}</td>
         <td>
-          <a href="{{ route('medicaments.show', $medicament->id) }}" class="btn btn-primary">Afficher</a>
+
+          <div class="btn-group" role="group" aria-label="Basic example">
+
+            {{-- <button href="{{ route('medicaments.edit', $medicament->id)}}" type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editModal"><i class="fa fa-eyedropper" aria-hidden="true"></i></button> --}}
+            
+            <a href="{{ route('medicaments.show', $medicament->id) }}" class="btn btn-primary"><i class="fa fa-eye" aria-hidden="true"></i></a>
+            
+            <form action="{{ route('medicaments.destroy', $medicament->id) }}" method="POST" style="display: inline-block;">
+              @csrf
+              @method('DELETE')
+              <button type="reset" onclick="return " class="btn btn-danger p-2" data-bs-toggle="modal" data-bs-target="#destroytModal" ><i class="fa fa-trash" aria-hidden="true"></i></button>
+            </form>
+    
+          </div>
         </td>
       </tr>
       @endforeach
@@ -268,8 +281,35 @@ document.getElementById('lieu_stockage_id').addEventListener('change', function(
 
 
    @endsection
-    
-
- 
+       
+   <!doctype html>
+   <html lang="en">
+   <head>
+       <meta charset="utf-8">
+       <meta name="viewport" content="width=device-width, initial-scale=1">
+       <title>Editer</title>
+       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+   </head>
+   <body>       
+              
+   {{-- destroytModal --}}
+   <div class="modal fade" id="destroytModal" tabindex="-1" aria-labelledby="destroytModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="destroytModalLabel">Supprimer le Medicament</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+               <div class="#destroytModal modal-sm"><form action="{{ route('medicaments.destroy', $medicament->id) }}" method="POST" style="display: inline-block;">
+        @csrf
+        @method('DELETE')
+        <button type="submit" class="btn btn-danger p-2" >Supprimer</button>
+      </form>
+    </div>
+            </div>
+        </div>
+    </div>
+</div>
 
  

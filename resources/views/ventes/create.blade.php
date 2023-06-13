@@ -31,7 +31,7 @@
                     @for ($i = 0; $i < count(old('medicament_id', [''])); $i++)
                     <tr>
                         <td><input type="hidden" name="medicament_id[]" class="form-control medicament_id" value="{{ old('medicament_id.' . $i) }}"></td>
-                        <td><input type="text" name="nom[]" class="form-control search-input autocomplete" value="{{ old('nom.' . $i) }}"></td>
+                        <td><input type="text" name="nom[]" class="form-control search-input autocomplete" value="{{ old('nom.' . $i) }}" autofocus></td>
                         <td><input type="text" name="prix_unitaire[]" class="form-control prix_unitaire" value="{{ old('prix_unitaire.' . $i) }}"></td>
                         <td>
                             <input type="text" name="quantite_vendue[]" class="form-control quantite-vendue" value="{{ old('quantite_vendue.' . $i) }}">
@@ -88,7 +88,7 @@
                                 
                             });
                     },
-                    minLength: 2,
+                    minLength: 1,
                     select: function(event, ui) {
                         $(this).val(ui.item.label);
                         $(this).data('prix', ui.item.prix_unitaire);

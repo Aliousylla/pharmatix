@@ -1,70 +1,125 @@
 <!doctype html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Détails du médicament</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-  </head>
-  <body>
-    
-    <div class="container ">
-      <h1 class=" text-center text-success text-decoration-underline p-3">Détails du médicament {{ $medicament->nom }}</h1>
-
-      <div class="card table-responsive shadow-lg  bg-body-tertiary rounded col-md-6 m-auto">
-        <div class="card-body p-5 table table-bordered">
-          
-          
-            <div class=" border p-3">
-              <h3 class=" text-success text-decoration-underline">medicament  </h3>
-              <h5 class="card-title">Nom : {{ $medicament->nom }}</h5>
-              <h5 class="card-text">Dosage : {{ $medicament->dosage }}</h5>
-              <h5 class="card-text">Fabricant : {{ $medicament->fabricant }}</h5>
-              <h5 class="card-text">Prix unitaire : {{ $medicament->prix_unitaire }}</h5>
-              <h5 class="card-text">Quantité en stock : {{ $medicament->quantite_en_stock }}</h5>
-              <h5 class="card-text">Date d'expiration : {{ $medicament->date_expiration }}</h5>
-              <h5 class="card-text">Catégorie : {{ $medicament->categorie->nom }}</h5>
-                       </div>
-            <div class=" border p-3">
-              <h2 class=" text-success text-decoration-underline">Description</h2>
-              <p class="card-text text-lowercase lh-1 fs-4" > {{ $medicament->description }}</p>
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <div class="container p-5   ">
+        <div class="card col-6 m-auto shadow-lg rounded " >
+            <div class="success text-center p-2 ">
+                <i class="fa-solid fa-circle-check fa-6x text-gray-800 text-success"></i>
+                <h5 class="card-title text-center text-success p-3">{{ $medicament->nom }}</h5>
+                
+                    
+                                     
+               
             </div>
-            <div class=" border p-3">
-              <h2 class=" text-success text-decoration-underline">Emplacement</h2>
-              <h5 class="card-text">zone : {{ $medicament->lieuStockage->nom}}</h5>
-              <h5 class="card-text">Adresse : {{ $medicament->lieuStockage->adresse}}</h5> 
-              <h5 class="card-text">Étagère  : {{ $medicament->emplacement->etage }}</h5>
-              <h5 class="card-text">Classe : {{ $medicament->emplacement->nom }}</h5>
-         
-            </div>
-            {{-- <div class=" border p-3">
-              <h2 class=" text-success text-decoration-underline">Fournisseur</h2>
+            <div class="card-body bg-success  p-2 text-light">
+              <table class="table table-striped ">
+                
+                <tr >
+                    <th class="text-light">Dosage</th>
+                    <td class="text-light"> {{ $medicament->dosage }}</td>
+                </tr>
+                <tr>
+                   <th class="text-light"> Fabricant</th>
+                   <td class="text-light">{{ $medicament->fabricant }} </td>
+                </tr>
+                <tr>
+                    <th class="text-light">Prix unitaire</th>
+                    <td class="text-light">{{ $medicament->prix_unitaire }} DHS</td>
+                
+                </tr>
+                <tr>
+                    <th class="text-light">Quantité en stock</th>
+                    <td class="text-light">{{ $medicament->quantite_en_stock }}</td>
+                </tr>
+                <tr>
+                    <th class="text-light">Date d'expiration</th>
+                    <td class="text-light">{{ $medicament->date_expiration }}</td>
+                </tr>
+                <tr>
+                    <th class="text-light">Catégorie</th>
+                    <td class="text-light">{{ $medicament->categorie->nom }}</td>
+                </tr>
+                
+                    
+              </table>
+              <h3>Emplacement</h3>
+              <table class="table table-striped ">
+                
+                <tr >
+                    <th class="text-light">Zone</th>
+                    <td class="text-light"> {{ $medicament->emplacement->lieuStockage->nom}}</td>
+                </tr>
+                <tr>
+                   <th class="text-light"> Adresse</th>
+                   <td class="text-light">{{ $medicament->emplacement->lieuStockage->adresse}} </td>
+                </tr>
+                <tr>
+                    <th class="text-light">Étagère</th>
+                    <td class="text-light">{{ $medicament->emplacement->etage }} DHS</td>
+                
+                </tr>
+                <tr>
+                    <th class="text-light">Classe</th>
+                    <td class="text-light">{{ $medicament->emplacement->nom }}</td>
+                </tr>
+                
+              </table>
+              <h3>Fournisseur</h3>
+              <table class="table table-striped ">
+                
+                <tr >
+                    <th class="text-light">Societe</th>
+                    <td class="text-light"> {{ $medicament->fournisseur->nom_societe }}</td>
+                </tr>
+                <tr>
+                   <th class="text-light"> Agent</th>
+                   <td class="text-light">{{ $medicament->fournisseur->nom_contact }} </td>
+                </tr>
+                <tr>
+                    <th class="text-light">Adresse</th>
+                    <td class="text-light">{{ $medicament->fournisseur->adresse }}</td>
+                
+                </tr>
+                <tr>
+                    <th class="text-light">Telephone</th>
+                    <td class="text-light">{{ $medicament->fournisseur->numero_telephone }}</td>
+                </tr>
+                <tr>
+                    <th class="text-light">Email</th>
+                    <td class="text-light">{{ $medicament->fournisseur->adresse_email }}</td>
+                </tr>
+                
+              </table>
+              <p class="text-start">Description :{{ $medicament->description }}</p>
+                <div class="text-center">
+                    <button type="button" class="btn btn-warning p-2" data-bs-toggle="modal" data-bs-target="#editModal">
+                        Editer
+                    </button>
           
-              <h5 class="card-text">Societe : {{ $medicament->fournisseur->nom_societe}}</h5>
-              <h5 class="card-text">contact : {{ $medicament->fournisseur->nom_contact}}</h5> 
-              <h5 class="card-text">Adresse : {{ $medicament->fournisseur->adresse}}</h5> 
-              <h5 class="card-text">numero de telephone : {{ $medicament->fournisseur->numero_telephone}}</h5> 
-              <h5 class="card-text">Adresse_email : {{ $medicament->fournisseur->adresse_email}}</h5>   
-            </div> --}}
+                <form action="{{ route('medicaments.destroy', $medicament->id) }}" method="POST" style="display: inline-block;">
+                  @csrf
+                  @method('DELETE')
+                  <button type="submit" class="btn btn-danger p-2" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce médicament ?')">Supprimer</button>
+                </form>
+                <a href="{{ route('medicaments.index') }}" class="btn btn-primary p-2">Retour</a>
+                </div>
+            </div>
             
-            {{-- <a href="{{ route('medicaments.edit', $medicament->id) }}" class="btn btn-warning p-2">Modifier</a> --}}
-            <button type="button" class="btn btn-warning p-2" data-bs-toggle="modal" data-bs-target="#editModal">
-              Editer
-          </button>
-
-      <form action="{{ route('medicaments.destroy', $medicament->id) }}" method="POST" style="display: inline-block;">
-        @csrf
-        @method('DELETE')
-        <button type="submit" class="btn btn-danger p-2" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce médicament ?')">Supprimer</button>
-      </form>
-      <a href="{{ route('medicaments.index') }}" class="btn btn-primary p-2">Retour</a>
-          </div>
-          
-      
         </div>
-      </div>
-      
-      
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+   
+</body>
+</html>
+
       <!doctype html>
       <html lang="en">
       <head>
@@ -180,26 +235,7 @@
                         @error('categorie_id')
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
-                    </div>
-        
-                    <div class="form-group mb-3">
-                      <label for="lieu_stockage_id">lieu de stockage</label>
-                      <select name="lieu_stockage_id" id="lieu_stockage_id" class="form-control @error('lieu_stockage_id') is-invalid @enderror" required>
-                          <option value="">Sélectionnez le lieu de stockage</option>
-                          @foreach($lieuStockages as $lieuStockage)
-                              <option value="{{ $lieuStockage->id }}" {{ $medicament->lieu_stockage_id == $lieuStockage->id ? 'selected' : '' }}>{{ $lieuStockage->nom}}</option>
-                          @endforeach
-                      </select>
-                      <div class="invalid-feedback">
-                          Veuillez sélectionner le lieu de stockage.
-                      </div>
-                      @error('lieus_de_tockage_id')
-                          <div class="alert alert-danger">{{ $message }}</div>
-                      @enderror
-                  </div>
-        
-
-                  
+                    </div>  
                   <div class="form-group mb-3">
                     <label for="emplacement_id">Emplacement</label>
                     <select name="emplacement_id" id="emplacement_id" class="form-control @error('emplacement_id') is-invalid @enderror" required>

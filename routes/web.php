@@ -24,11 +24,9 @@ use App\Http\Controllers\VenteController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth/login');
 });
-Route::get('/layout', function () {
-    return view('layoute/layout');
-});
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -98,6 +96,7 @@ Route::put('/ventes/{vente}', [VenteController::class, 'update'])->name('ventes.
 Route::delete('/ventes/{vente}', [VenteController::class, 'destroy'])->name('ventes.destroy');
 
 Route::get('/search-medicament-autocomplete', [VenteController::class, 'searchMedicamentAutocomplete'])->name('searchMedicamentAutocomplete');
+Route::get('/dasboard', [VenteController::class, 'dasboard'])->name('dasboard');
 
 
 // Routes pour les emplacements

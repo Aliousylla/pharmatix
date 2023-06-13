@@ -1,3 +1,4 @@
+
 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
     <!-- Sidebar Toggle (Topbar) -->
@@ -181,7 +182,7 @@
             <!-- Dropdown - User Information -->
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                 aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="#">
+                <a class="dropdown-item" href="{{route('profile.edit') }}">
                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                     Profile
                 </a>
@@ -194,13 +195,52 @@
                     Activity Log
                 </a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                    Logout
-                </a>
+                
+                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logouttModal">
+                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                        se deconnecter 
+                    </a>
+                
+                
             </div>
         </li>
 
     </ul>
 
 </nav>
+
+  
+  <!-- Modal -->
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>se deconnecter </title>
+
+  </head>
+  <body>
+    <div class="modal fade" id="logouttModal" tabindex="-1" aria-labelledby="logouttModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="logouttModalLabel">voulez vous vraiment vous déconnecter </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                   <div class="#logouttModal modal-sm">
+            <form action="{{ route('logout') }}" method="POST" style="display: inline-block;">
+            @csrf
+            
+            <button type="submit" class="btn btn-danger p-2" >se deconnecter </button>
+          </form>
+        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  </body>
+  </html>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>

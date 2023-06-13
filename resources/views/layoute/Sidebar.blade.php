@@ -2,10 +2,11 @@
 
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-        <div class="sidebar-brand-icon rotate-n-15">
-            <i class="fas fa-laugh-wink"></i>
+        <div class="sidebar-brand-icon rotate-n-0">
+            <i class="fa fa-plus  fs-1 text-center  border-light rounded-5 p-3" aria-hidden="true"></i>
+            
         </div>
-        <div class="sidebar-brand-text mx-3">{{ Auth::user()->name }} <sup></sup></div>
+        <div class="sidebar-brand-text mx-3">Pharmatix <sup></sup></div>
     </a>
 
     <!-- Divider -->
@@ -75,7 +76,7 @@
     
 
     <li class="nav-item">
-        <a class="nav-link" href="charts.html">
+        <a class="nav-link" href="{{ asset('profile') }}">
             <i class="fa fa-cog"></i>
             <span>Comptes</span></a>
     </li>
