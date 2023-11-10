@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Vente extends Model
 {
     use HasFactory;
-    protected $fillable = ['total', 'date_vente'];
+    protected $fillable = ['total', 'date_vente','user_id'];
     
     // Exemple de relation avec le modèle Medicament
     public function medicament()

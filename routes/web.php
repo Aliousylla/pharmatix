@@ -10,6 +10,7 @@ use App\Http\Controllers\FournisseurController;
 use App\Http\Controllers\InventaireController;
 use App\Http\Controllers\LieuStockageController;
 use App\Http\Controllers\MedicamentController;
+use App\Http\Controllers\OrdonnanceController;
 use App\Http\Controllers\VenteController;
 
 /*
@@ -122,6 +123,9 @@ Route::get('/lieu-stockage/{id}/emplacements', 'LieuStockageController@getEmplac
 
 // Routes pour lieu inventaires
 Route::get('/inventaires', [InventaireController::class, 'index'])->name('inventaires.index');
+// Route::resource('ordonnance', OrdonnanceController::class);
+Route::get('/ordonnances', [OrdonnanceController::class, 'index'])->name('ordonnances.index');
+Route::get('/ordonnances/{ordonnance}', [OrdonnanceController::class, 'show'])->name('ordonnances.show');
 
 });
 

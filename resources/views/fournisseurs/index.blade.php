@@ -20,7 +20,7 @@ Liste des fournisseurs
     <tfoot>
       <tr>
         <th scope="col">#</th>
-        <th scope="col">Nom de l'entreprise</th>
+        <th scope="col">Nom de l'entreprise</th> 
         <th scope="col">nom de l'agent</th>
         <th scope="col">Adresse</th>
         <th scope="col">Numero Telephone</th>

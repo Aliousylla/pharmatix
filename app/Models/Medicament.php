@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Medicament extends Model
 {
     use HasFactory;
-    protected $table = 'medicaments';
+  
     protected $fillable = ['nom', 'description', 'dosage', 'fabricant', 'prix_unitaire', 'quantite_en_stock', 'date_expiration', 'categorie_id', 'emplacement_id','fournisseur_id'];
 
     public function categorie()
